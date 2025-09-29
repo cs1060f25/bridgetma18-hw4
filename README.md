@@ -67,7 +67,7 @@ Both code files include inline comments documenting that generative AI (OpenAI G
 ### Option A: Vercel (Python serverless)
 
 1. Run the two `csv_to_sqlite.py` commands locally (see section 1) so that `data.db` exists in the project root. Commit the database so Vercel can bundle it alongside the code.
-2. The provided `vercel.json` instructs Vercel to execute `api/index.py` (Python 3.11 runtime) and rewrites all requests to that function. No additional build command is required.
+2. The provided `vercel.json` rewrites all requests to `api/index.py`, and Vercel automatically applies its default Python runtime for `.py` functions. No additional build command is required.
 3. Push the repo to a private GitHub repository under the `cs1060f25` organization and import it into Vercel. Accept the defaults for the build step.
 4. After deploy:
    - `https://<project>.vercel.app/` serves the HTML helper UI.
