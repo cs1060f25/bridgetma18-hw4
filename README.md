@@ -63,21 +63,32 @@ Both code files include inline comments documenting that generative AI (OpenAI G
 
 ## 3. Deploying
 
-### Option A: Netlify (files included)
+### Option A: Vercel (Python serverless)
 
-This repo now contains the bits Netlify needs under `netlify/functions/` plus a `netlify.toml` build config.
+1. Run the two `csv_to_sqlite.py` commands locally (see section 1) so that `data.db` exists in the project root. Commit the database so Vercel can bundle it.
+2. Create a `vercel.json` file such as:
 
-1. Run the two `csv_to_sqlite.py` commands locally (see section 1) so that `data.db` exists in the project root.
-2. Push the repository to GitHub (private) and connect it when creating a Netlify site.
-3. Netlify will execute the build command from `netlify.toml`, which installs dependencies into `netlify/functions/` and copies `data.db` next to the Python function (`netlify/functions/county_data.py`).
-4. After the deploy completes, test the endpoint at `https://<yoursite>.netlify.app/county_data` using a POST request with JSON.
-5. Update `link.txt` with the production URL once everything works.
+   ```json
+   {
+     "functions": {
+       "api/index.py": {
+         "runtime": "python3.11",
+         "memory": 1024,
+         "maxDuration": 10
+       }
+     }
+   }
+   ```
 
-> **Note:** If you prefer, you can run the build command locally before committing (to vendor dependencies) but it is not required—Netlify will install them during the deploy.
+   This instructs Vercel to treat `api/index.py` as a serverless function.
+
+3. Push the repo to a private GitHub repository under the `cs1060f25` org and import it into Vercel. Leave the build command empty; Vercel will install `requirements.txt` automatically.
+4. After deploy, POST to `https://<project>.vercel.app/api/county_data` with the same JSON payloads used in local testing (Vercel maps `/api/index.py` to `/api/`).
+5. Update `link.txt` with the production URL once the endpoint works.
 
 ### Option B: Other platforms
 
-The Flask app remains compatible with WSGI platforms such as Render or Vercel. A typical flow is:
+The Flask app remains compatible with WSGI hosts such as Render or any VM/container environment:
 
 1. Create a new private repository (named `<username>-hw4`) under the `cs1060f25` organization based on this project.
 2. Upload `data.db` to the hosting provider using the two CSV files and `csv_to_sqlite.py`, then configure the service to expose the Flask app.

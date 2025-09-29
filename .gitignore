@@ -10,7 +10,7 @@ ENV/
 venv/
 
 # SQLite databases and CSV artifacts
-# Allow the root data.db so it can be deployed with Netlify
+# Allow the root data.db so it can travel with deployments
 *.sqlite
 *.db
 *.sqlite3
