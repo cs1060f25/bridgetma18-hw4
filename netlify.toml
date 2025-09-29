@@ -1,0 +1,14 @@
+[build]
+  command = "pip install -r requirements.txt -t netlify/functions/county_data && cp data.db netlify/functions/county_data/"
+  publish = "public"
+
+[build.environment]
+  PYTHON_VERSION = "3.11"
+
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/county_data"
+  to = "/.netlify/functions/county_data"
+  status = 200

@@ -1,0 +1,20 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env
+.venv
+ENV/
+venv/
+
+# SQLite databases and CSV artifacts
+# Allow the root data.db so it can be deployed with Netlify
+*.sqlite
+*.db
+*.sqlite3
+!data.db
+
+# macOS metadata
+.DS_Store
