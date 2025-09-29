@@ -1,5 +1,5 @@
 [build]
-  command = "pip install -r requirements.txt -t netlify/functions/county_data && cp data.db netlify/functions/county_data/"
+  command = "pip install -r requirements.txt -t netlify/functions && cp data.db netlify/functions/"
   publish = "public"
 
 [build.environment]

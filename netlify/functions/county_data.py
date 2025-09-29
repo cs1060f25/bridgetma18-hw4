@@ -10,14 +10,13 @@ from pathlib import Path
 from .wsgi_adapter import wsgi_handler
 
 CURRENT_DIR = Path(__file__).resolve().parent
-REPO_ROOT = CURRENT_DIR.parents[2]
+REPO_ROOT = CURRENT_DIR.parent.parent
 
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from api import index  # noqa: E402
 
-# Point the Flask app at the copy of data.db that Netlify places next to this file.
 index.DB_PATH = CURRENT_DIR / "data.db"
 
 handler = wsgi_handler(index.APP)

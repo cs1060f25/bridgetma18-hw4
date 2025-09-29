@@ -1,5 +1,7 @@
 """Minimal WSGI-to-Lambda adapter for Netlify Python functions."""
 
+# Source: Implemented with assistance from OpenAI's GPT-5 (Codex) in the Harvard CS106 Codex CLI.
+
 from __future__ import annotations
 
 import base64

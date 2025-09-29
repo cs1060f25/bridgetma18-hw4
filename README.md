@@ -65,11 +65,11 @@ Both code files include inline comments documenting that generative AI (OpenAI G
 
 ### Option A: Netlify (files included)
 
-This repo now contains a Netlify function scaffold under `netlify/functions/county_data/` plus a `netlify.toml` build config. The Netlify UI can run the same build command defined in the config file.
+This repo now contains the bits Netlify needs under `netlify/functions/` plus a `netlify.toml` build config.
 
 1. Run the two `csv_to_sqlite.py` commands locally (see section 1) so that `data.db` exists in the project root.
 2. Push the repository to GitHub (private) and connect it when creating a Netlify site.
-3. Netlify will execute the build command from `netlify.toml`, which installs dependencies into the function directory and copies `data.db` alongside the handler.
+3. Netlify will execute the build command from `netlify.toml`, which installs dependencies into `netlify/functions/` and copies `data.db` next to the Python function (`netlify/functions/county_data.py`).
 4. After the deploy completes, test the endpoint at `https://<yoursite>.netlify.app/county_data` using a POST request with JSON.
 5. Update `link.txt` with the production URL once everything works.
 

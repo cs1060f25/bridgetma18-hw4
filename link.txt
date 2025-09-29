@@ -1,1 +1,1 @@
-https://replace-this-with-your-deployed-endpoint.example.com/county_data
+https://county-data-api.netlify.app/
