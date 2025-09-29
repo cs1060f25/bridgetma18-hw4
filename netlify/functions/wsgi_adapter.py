@@ -22,10 +22,15 @@ def _convert_headers(headers: Headers) -> Headers:
 
 def _build_environ(event: Dict, body_bytes: bytes) -> Dict:
     headers = _convert_headers(event.get("headers") or {})
+    path_info = event.get("path", "/")
+    prefix = "/.netlify/functions/"
+    if path_info.startswith(prefix):
+        path_info = "/" + path_info[len(prefix):]
+
     environ: Dict[str, object] = {
         "REQUEST_METHOD": event.get("httpMethod", "GET"),
         "SCRIPT_NAME": "",
-        "PATH_INFO": event.get("path", "/"),
+        "PATH_INFO": path_info,
         "QUERY_STRING": event.get("rawQueryString", ""),
         "SERVER_NAME": headers.get("host", "netlify"),
         "SERVER_PORT": headers.get("x-forwarded-port", "443"),
