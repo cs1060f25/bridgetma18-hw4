@@ -147,5 +147,13 @@ def county_data() -> Response:
     return jsonify(records)
 
 
+# Expose an alternate path that matches Vercel's default function routing (/api/*).
+APP.add_url_rule("/api/county_data", view_func=county_data, methods=["POST"])
+
+
 if __name__ == "__main__":
     APP.run(host="0.0.0.0", port=8000, debug=True)
+
+
+# Alias used by Vercel Python runtime
+app = APP
