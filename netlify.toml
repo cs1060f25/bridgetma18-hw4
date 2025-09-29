@@ -11,4 +11,4 @@
 [[redirects]]
   from = "/county_data"
   to = "/.netlify/functions/county_data"
-  status = 200
+  status = 200!
