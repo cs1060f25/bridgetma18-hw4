@@ -4,7 +4,8 @@ This homework was done in partner with Codex. This repository contains the submi
 ## Project structure
 
 - `csv_to_sqlite.py` &mdash; Script that ingests a CSV file and writes/updates a table in `data.db`.
-- `api/index.py` &mdash; Flask application that implements the `county_data` endpoint backed by `data.db`.
+- `api/index.py` &mdash; Flask application that implements the `county_data` endpoint and the optional HTML UI.
+- `api/templates/index.html` &mdash; Minimal client for experimenting with the API in a browser.
 - `requirements.txt` &mdash; Python dependencies for the API.
 - `link.txt` &mdash; URL to the deployed endpoint (update after deployment).
 - `.gitignore` &mdash; Ignores temporary and generated files.
@@ -65,25 +66,12 @@ Both code files include inline comments documenting that generative AI (OpenAI G
 
 ### Option A: Vercel (Python serverless)
 
-1. Run the two `csv_to_sqlite.py` commands locally (see section 1) so that `data.db` exists in the project root. Commit the database so Vercel can bundle it.
-2. Create a `vercel.json` file such as:
-
-   ```json
-   {
-     "functions": {
-       "api/index.py": {
-         "runtime": "python3.11",
-         "memory": 1024,
-         "maxDuration": 10
-       }
-     }
-   }
-   ```
-
-   This instructs Vercel to treat `api/index.py` as a serverless function.
-
-3. Push the repo to a private GitHub repository under the `cs1060f25` org and import it into Vercel. Leave the build command empty; Vercel will install `requirements.txt` automatically.
-4. After deploy, POST to `https://<project>.vercel.app/api/county_data` with the same JSON payloads used in local testing (Vercel maps `/api/index.py` to `/api/`).
+1. Run the two `csv_to_sqlite.py` commands locally (see section 1) so that `data.db` exists in the project root. Commit the database so Vercel can bundle it alongside the code.
+2. The provided `vercel.json` instructs Vercel to execute `api/index.py` (Python 3.11 runtime) and rewrites all requests to that function. No additional build command is required.
+3. Push the repo to a private GitHub repository under the `cs1060f25` organization and import it into Vercel. Accept the defaults for the build step.
+4. After deploy:
+   - `https://<project>.vercel.app/` serves the HTML helper UI.
+   - `https://<project>.vercel.app/county_data` and `https://<project>.vercel.app/api/county_data` accept POST requests with the JSON payload described above.
 5. Update `link.txt` with the production URL once the endpoint works.
 
 ### Option B: Other platforms

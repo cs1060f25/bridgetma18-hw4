@@ -11,7 +11,7 @@ from http import HTTPStatus
 from pathlib import Path
 from typing import Any, Dict, List
 
-from flask import Flask, Response, jsonify, request
+from flask import Flask, Response, jsonify, render_template, request
 from werkzeug.exceptions import BadRequest, HTTPException, NotFound
 
 APP = Flask(__name__)
@@ -145,6 +145,12 @@ def county_data() -> Response:
         raise NotFound(description="No matching records found")
 
     return jsonify(records)
+
+
+@APP.route("/")
+def index() -> Response:
+    """Render a minimal UI that lets users query the API."""
+    return render_template("index.html", measures=sorted(ALLOWED_MEASURES))
 
 
 # Expose an alternate path that matches Vercel's default function routing (/api/*).
